@@ -117,9 +117,23 @@ PR #4 的 kanban 骨架重写是更底层的基础设施升级。上述优化方
 |---|---|
 | 生成 `.claude/agents/*.md` 静态角色卡 | Hermes 的 agent 是动态派出的，不存在"预定义 agent 文件"这个概念 |
 | 生成 `.mcp.json` MCP 配置 | Hermes 的 MCP 在 config.yaml 里统一管，不需要 skill 碰 |
-| 生成 `CLAUDE.md` 路由表 | Hermes 没有 CLAUDE.md 这个概念；路由靠指挥官脑子 + skill 规则 |
 | 要求安装 Claude Code CLI | 不相关 |
 | Claude 专有 slash command `/metaskill` | Hermes 用 skill 的 description 字段做关键词触发，不用 slash command |
+
+### 关于 AGENTS.md / CLAUDE.md 路由表
+
+> **更正：** Hermes 有 `AGENTS.md`（对标 Claude Code 的 `CLAUDE.md`），会话启动时自动注入为项目上下文。
+
+Metaskill 生成 `CLAUDE.md` 做路由表这个思路**可以借鉴**——在项目目录下生成/更新 `AGENTS.md`，写入：
+- 该项目的团队角色定义（花名册）
+- 指挥官路由规则（什么任务派给谁）
+- 各角色的 skills 建议
+
+但这不是 Phase 1-3 的一部分，更像是一个**可选增强**：团队任务完成后，把花名册和角色定义固化到项目的 `AGENTS.md` 里，下次在同一项目里开 agent team 时直接读取，省去重新调研。
+
+### 关于搜索方式
+
+> Phase 1 中提到的 "web_search" 为占位描述。用户有自己的搜索工具链（如 anysearch、search-router 等 skill），实际实现时用项目已有的搜索能力即可，不强制绑定具体搜索工具。
 
 ---
 
